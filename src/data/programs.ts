@@ -64,8 +64,8 @@ export const programs: Program[] = [
       electives: ['bio', 'chem', 'combined_sci', 'integrated_sci', 'phy']
     },
     minRequirements: { chinese: 3, english: 3, math: 2, ls: 3 },
-    medianBest5: 27,
-    minBest5: 23,
+    medianBest5: 28,
+    minBest5: 27,
     maxBest5: 31,
     subjectWeighting: {},
     additionalRequirements: 'Level 3+ in Biology/Chemistry/Combined Science/Integrated Science/Physics required; Chinese proficiency required'

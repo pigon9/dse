@@ -5,6 +5,7 @@ import GradeInputForm from './GradeInputForm';
 import ProgramSelection from './ProgramSelection';
 import ResultsPage from './ResultsPage';
 import { GraduationCap, FileText, CheckCircle } from 'lucide-react';
+import { usePredictor } from '../context/PredictorContext';
 
 type Route = 'grades' | 'programs' | 'results';
 
@@ -16,8 +17,12 @@ const routes: Record<Route, React.ReactNode> = {
 
 export const RouterProvider: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState<Route>('grades');
+  const { clearPredictionResults } = usePredictor();
 
   const handleNext = (route: Route) => {
+    if (currentRoute === 'results' && route === 'programs') {
+      clearPredictionResults();
+    }
     setCurrentRoute(route);
     window.scrollTo(0, 0);
   };

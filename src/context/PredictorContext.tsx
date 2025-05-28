@@ -10,6 +10,7 @@ interface PredictorContextType {
   updateSelectedPrograms: (programs: Program[]) => void;
   calculateResults: () => void;
   setPriorityMode: (mode: boolean) => void;
+  clearPredictionResults: () => void;
 }
 
 const defaultContext: PredictorContextType = {
@@ -20,6 +21,7 @@ const defaultContext: PredictorContextType = {
   updateSelectedPrograms: () => {},
   calculateResults: () => {},
   setPriorityMode: () => {},
+  clearPredictionResults: () => {},
 };
 
 const PredictorContext = createContext<PredictorContextType>(defaultContext);
@@ -44,6 +46,10 @@ export const PredictorProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     setIsFirstPriority(mode);
   };
 
+  const clearPredictionResults = () => {
+    setPredictionResults([]);
+  };
+
   const calculateResults = () => {
     const results = selectedPrograms.map(program => 
       calculateAdmissionLikelihood(userGrades, program, isFirstPriority)
@@ -61,6 +67,7 @@ export const PredictorProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         updateSelectedPrograms,
         calculateResults,
         setPriorityMode,
+        clearPredictionResults,
       }}
     >
       {children}

@@ -43,7 +43,7 @@ export const RouterProvider: React.FC = () => {
             {steps.map((step, stepIdx) => (
               <li key={step.id} className={`relative ${stepIdx !== steps.length - 1 ? 'pr-8 sm:pr-20' : ''}`}>
                 {stepIdx !== steps.length - 1 && (
-                  <div className="absolute top-4 left-7 -ml-px mt-0.5 h-0.5 w-full sm:w-20 bg-gray-300" aria-hidden="true">
+                  <div className="absolute top-4 left-7 -ml-px mt-0.5 h-0.5 w-full sm:w-20 bg-gray-300\" aria-hidden="true">
                     <div 
                       className="h-0.5 bg-blue-600 transition-all duration-500" 
                       style={{ width: step.status === 'upcoming' ? '0%' : (step.status === 'current' ? '50%' : '100%') }}
@@ -58,7 +58,7 @@ export const RouterProvider: React.FC = () => {
                       'border-2 border-gray-300 bg-white text-gray-500'
                     } transition-all duration-300`}>
                       {step.status === 'complete' ? (
-                        <step.icon className="w-5 h-5" aria-hidden="true" />
+                        <step.icon className="w-5 h-5\" aria-hidden="true" />
                       ) : (
                         <span>{stepIdx + 1}</span>
                       )}

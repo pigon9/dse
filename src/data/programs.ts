@@ -13,9 +13,9 @@ export const programs: Program[] = [
       electives: []
     },
     minRequirements: { chinese: 3, english: 3, math: 2, ls: 3 },
-    medianBest5: 34,
-    minBest5: 30,
-    maxBest5: 38,
+    medianBest5: 26,
+    minBest5: 24,
+    maxBest5: 28,
     subjectWeighting: {},
     additionalRequirements: 'Cantonese knowledge required'
   },

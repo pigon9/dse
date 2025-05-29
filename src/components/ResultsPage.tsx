@@ -11,6 +11,14 @@ const ResultsPage: React.FC = () => {
       calculateResults();
     }
   }, [calculateResults, predictionResults.length]);
+
+  // Helper function to round to 4 significant figures
+  const roundToSigFigs = (num: number): number => {
+    if (num === 0) return 0;
+    const magnitude = Math.floor(Math.log10(Math.abs(num))) + 1;
+    const scale = Math.pow(10, 4 - magnitude);
+    return Math.round(num * scale) / scale;
+  };
   
   if (predictionResults.length === 0) {
     return (
@@ -86,7 +94,7 @@ const ResultsPage: React.FC = () => {
                 
                 <div className="text-right">
                   <div className="text-xl font-bold flex items-center justify-end">
-                    {result.probability}%
+                    {roundToSigFigs(result.probability)}%
                     <span className="text-xs ml-1">chance</span>
                   </div>
                   <div className="text-xs text-gray-500 mt-1">
@@ -104,15 +112,15 @@ const ResultsPage: React.FC = () => {
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span>Your Score (Best 5):</span>
-                      <span className="font-medium">{result.userBest5Score}</span>
+                      <span className="font-medium">{roundToSigFigs(result.userBest5Score)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Program Median:</span>
-                      <span className="font-medium">{result.program.medianBest5}</span>
+                      <span className="font-medium">{roundToSigFigs(result.program.medianBest5)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span>Program Minimum:</span>
-                      <span className="font-medium">{result.program.minBest5}</span>
+                      <span className="font-medium">{roundToSigFigs(result.program.minBest5)}</span>
                     </div>
                     <div className="flex justify-between border-t pt-1">
                       <span>Score Gap:</span>
@@ -120,7 +128,7 @@ const ResultsPage: React.FC = () => {
                         result.scoreGap > 0 ? 'text-green-600' : 
                         result.scoreGap < 0 ? 'text-red-600' : ''
                       }`}>
-                        {result.scoreGap > 0 ? '+' : ''}{result.scoreGap}
+                        {result.scoreGap > 0 ? '+' : ''}{roundToSigFigs(result.scoreGap)}
                       </span>
                     </div>
                   </div>

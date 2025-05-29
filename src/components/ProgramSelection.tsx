@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { usePredictor } from '../context/PredictorContext';
 import { Program, University } from '../types';
 import { programs } from '../data/programs';
-import { Building, Filter, Check, X, Plus, Star } from 'lucide-react';
+import { Building, Filter, Check, X, Plus, Star, Search } from 'lucide-react';
 
 const ProgramSelection: React.FC = () => {
   const { selectedPrograms, updateSelectedPrograms, calculateResults, setPriorityMode } = usePredictor();
@@ -10,6 +10,7 @@ const ProgramSelection: React.FC = () => {
   const [selectedFaculty, setSelectedFaculty] = useState('');
   const [isFirstPriority, setIsFirstPriority] = useState(false);
   const [filteredPrograms, setFilteredPrograms] = useState<Program[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
   
   // Get unique universities
   const universities = [...new Set(programs.map(p => p.university))];
@@ -21,7 +22,7 @@ const ProgramSelection: React.FC = () => {
       .map(p => p.faculty)
   )];
   
-  // Update filtered programs when university or faculty changes
+  // Update filtered programs when university, faculty, or search changes
   useEffect(() => {
     let result = [...programs];
     
@@ -32,9 +33,17 @@ const ProgramSelection: React.FC = () => {
     if (selectedFaculty) {
       result = result.filter(p => p.faculty === selectedFaculty);
     }
+
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(p => 
+        p.name.toLowerCase().includes(query) || 
+        p.jupasCode.toLowerCase().includes(query)
+      );
+    }
     
     setFilteredPrograms(result);
-  }, [selectedUniversity, selectedFaculty]);
+  }, [selectedUniversity, selectedFaculty, searchQuery]);
   
   const toggleProgram = (program: Program) => {
     const isSelected = selectedPrograms.some(p => p.id === program.id);
@@ -49,6 +58,7 @@ const ProgramSelection: React.FC = () => {
   const clearFilters = () => {
     setSelectedUniversity('');
     setSelectedFaculty('');
+    setSearchQuery('');
   };
   
   const handleViewResults = () => {
@@ -70,7 +80,7 @@ const ProgramSelection: React.FC = () => {
               <Filter className="h-4 w-4 mr-2" />
               Select Institution
             </h3>
-            {(selectedUniversity || selectedFaculty) && (
+            {(selectedUniversity || selectedFaculty || searchQuery) && (
               <button 
                 onClick={clearFilters}
                 className="text-xs text-blue-600 hover:text-blue-800"
@@ -80,6 +90,20 @@ const ProgramSelection: React.FC = () => {
             )}
           </div>
           
+          {/* Search Box */}
+          <div className="mb-6">
+            <div className="relative">
+              <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search by name or JUPAS code"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+          </div>
+
           {/* Priority Mode Toggle */}
           <div className="mb-6 p-3 bg-amber-50 border border-amber-200 rounded-lg">
             <div className="flex items-center justify-between">
@@ -231,14 +255,16 @@ const ProgramSelection: React.FC = () => {
                   <X className="h-8 w-8 text-gray-400" />
                 </div>
                 <h3 className="text-lg font-medium text-gray-900">
-                  {selectedUniversity ? 'No programs found' : 'Select a university'}
+                  {searchQuery ? 'No matching programs found' : (selectedUniversity ? 'No programs found' : 'Select a university')}
                 </h3>
                 <p className="text-gray-600 mt-1">
-                  {selectedUniversity 
-                    ? 'Try selecting a different faculty or university'
-                    : 'Choose a university to view available programs'}
+                  {searchQuery 
+                    ? 'Try a different search term or clear filters'
+                    : (selectedUniversity 
+                      ? 'Try selecting a different faculty or university'
+                      : 'Choose a university to view available programs')}
                 </p>
-                {selectedUniversity && (
+                {(selectedUniversity || searchQuery) && (
                   <button
                     onClick={clearFilters}
                     className="mt-4 text-sm text-blue-600 hover:text-blue-800"

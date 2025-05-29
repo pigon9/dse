@@ -1773,7 +1773,522 @@ export const programs: Program[] = [
     medianBest5: 25.5,
     minBest5: 21.5,
     maxBest5: 29.5
-  }
+  },
+  {
+    id: 'hkust-international-research-enrichment',
+    jupasCode: 'JS5101',
+    name: 'International Research Enrichment',
+    university: 'HKUST',
+    faculty: 'School of Science',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: ['bio', 'chem', 'phy', 'm1', 'm2']
+    },
+    minRequirements: { chinese: 3, english: 3, math: 2, ls: 3 },
+    medianBest5: 36.75,
+    minBest5: 34.50,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 1, 'math': 1, 'bio': 1, 'chem': 1, 'phy': 1, 'm1': 1, 'm2': 1 },
+    additionalRequirements: 'Best 1 other subject',
+    preferredSubjects: ['science', 'm1', 'm2'],
+    level: 5
+  },
+  {
+    id: 'hkust-science-group-a',
+    jupasCode: 'JS5102',
+    name: 'Science (Group A)',
+    university: 'HKUST',
+    faculty: 'School of Science',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: ['bio', 'chem', 'phy', 'm1', 'm2']
+    },
+    minRequirements: { chinese: 3, english: 3, math: 2, ls: 3 },
+    medianBest5: 31.13,
+    minBest5: 29.66,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 1, 'math': 1, 'bio': 1, 'chem': 1, 'phy': 1, 'm1': 1, 'm2': 1 },
+    additionalRequirements: 'Best from Biology/Chemistry/Physics/M1/M2, Best 2 other subjects',
+    preferredSubjects: ['physics', 'm1', 'm2'],
+    level: 4
+  },
+  {
+    id: 'hkust-science-group-b',
+    jupasCode: 'JS5103',
+    name: 'Science (Group B)',
+    university: 'HKUST',
+    faculty: 'School of Science',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: ['bio', 'chem']
+    },
+    minRequirements: { chinese: 3, english: 3, math: 2, ls: 3 },
+    medianBest5: 32.00,
+    minBest5: 30.44,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 1, 'math': 1, 'bio': 1, 'chem': 1 },
+    additionalRequirements: 'Best from Biology/Chemistry/Physics/M1/M2, Best 2 other subjects',
+    preferredSubjects: ['biology', 'chemistry'],
+    level: 4
+  },
+  {
+    id: 'hkust-science-group-a-ai',
+    jupasCode: 'JS5181',
+    name: 'Science (Group A) with an Extended Major in Artificial Intelligence',
+    university: 'HKUST',
+    faculty: 'School of Science',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: ['bio', 'chem', 'phy', 'm1', 'm2']
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 37.38,
+    minBest5: 34.00,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 1, 'math': 1, 'bio': 1, 'chem': 1, 'phy': 1, 'm1': 1, 'm2': 1 },
+    additionalRequirements: 'Best from Biology/Chemistry/Physics/M1/M2, Best 2 other subjects',
+    preferredSubjects: ['physics', 'm1', 'm2'],
+    level: 5
+  },
+  {
+    id: 'hkust-biomedical-health-sciences',
+    jupasCode: 'JS5114',
+    name: 'BSc in Biomedical and Health Sciences',
+    university: 'HKUST',
+    faculty: 'School of Science',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: ['bio', 'chem', 'phy', 'm1', 'm2']
+    },
+    minRequirements: { chinese: 3, english: 3, math: 2, ls: 3 },
+    medianBest5: null,
+    minBest5: null,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 1, 'math': 1, 'bio': 1, 'chem': 1, 'phy': 1, 'm1': 1, 'm2': 1 },
+    additionalRequirements: 'Best from Biology/Chemistry/Physics/M1/M2, Best 2 other subjects',
+    note: 'NEW program'
+  },
+
+  // School of Engineering
+  {
+    id: 'hkust-engineering',
+    jupasCode: 'JS5200',
+    name: 'Engineering',
+    university: 'HKUST',
+    faculty: 'School of Engineering',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: ['bio', 'chem', 'phy', 'combined_sci', 'integrated_sci', 'ict', 'm1', 'm2']
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 39.78,
+    minBest5: 38.21,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 1, 'math': 1, 'bio': 1, 'chem': 1, 'phy': 1, 'combined_sci': 1, 'integrated_sci': 1, 'ict': 1, 'm1': 1, 'm2': 1 },
+    additionalRequirements: 'One of: Biology/Chemistry/Physics/Information and Communication Technology. Best 2 other subjects',
+    preferredSubjects: ['science', 'ict', 'm1', 'm2'],
+    level: 5
+  },
+  {
+    id: 'hkust-engineering-ai',
+    jupasCode: 'JS5282',
+    name: 'Engineering with an Extended Major in Artificial Intelligence',
+    university: 'HKUST',
+    faculty: 'School of Engineering',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: ['bio', 'chem', 'phy', 'combined_sci', 'integrated_sci', 'ict', 'm1', 'm2']
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 48.45,
+    minBest5: 45.70,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 1, 'math': 1, 'bio': 1, 'chem': 1, 'phy': 1, 'combined_sci': 1, 'integrated_sci': 1, 'ict': 1, 'm1': 1, 'm2': 1 },
+    additionalRequirements: 'One of: Biology/Chemistry/Physics/Information and Communication Technology. Best 2 other subjects',
+    preferredSubjects: ['science', 'ict', 'm1', 'm2'],
+    level: 5
+  },
+  {
+    id: 'hkust-beng-computer-engineering',
+    jupasCode: 'JS5212',
+    name: 'BEng in Computer Engineering',
+    university: 'HKUST',
+    faculty: 'School of Engineering',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: ['bio', 'chem', 'phy', 'combined_sci', 'integrated_sci', 'ict', 'm1', 'm2']
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: null,
+    minBest5: null,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 1, 'math': 1, 'bio': 1, 'chem': 1, 'phy': 1, 'combined_sci': 1, 'integrated_sci': 1, 'ict': 1, 'm1': 1, 'm2': 1 },
+    additionalRequirements: 'One of: Biology/Chemistry/Physics/Information and Communication Technology. Best 2 other subjects',
+    note: 'NEW program'
+  },
+
+  // School of Humanities and Social Science
+  {
+    id: 'hkust-global-china-studies',
+    jupasCode: 'JS5411',
+    name: 'BSc in Global China Studies',
+    university: 'HKUST',
+    faculty: 'School of Humanities and Social Science',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: []
+    },
+    minRequirements: { chinese: 3, english: 3, math: 2, ls: 3 },
+    medianBest5: 28.00,
+    minBest5: 27.50,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'chi': 1.5 },
+    additionalRequirements: 'Best 3 other subjects',
+    preferredSubjects: ['chinese'],
+    level: 4
+  },
+  {
+    id: 'hkust-quantitative-social-analysis',
+    jupasCode: 'JS5412',
+    name: 'BSc in Quantitative Social Analysis',
+    university: 'HKUST',
+    faculty: 'School of Humanities and Social Science',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: []
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 30.88,
+    minBest5: 30.00,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'Best 3 other subjects',
+    preferredSubjects: ['math', 'm1', 'm2'],
+    level: 5
+  },
+
+  // Academy of Interdisciplinary Studies
+  {
+    id: 'hkust-integrative-systems-design',
+    jupasCode: 'JS5711',
+    name: 'BSc in Integrative Systems and Design',
+    university: 'HKUST',
+    faculty: 'Academy of Interdisciplinary Studies',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: ['bio', 'chem', 'phy', 'combined_sci', 'dat', 'integrated_sci', 'ict', 'm1', 'm2']
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 39.28,
+    minBest5: 33.24,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'One of: Biology/Chemistry/Physics/Combined Science/Design and Applied Technology/Information and Communication Technology. Best 2 other subjects',
+    preferredSubjects: ['science', 'ict', 'dat', 'm1', 'm2'],
+    level: 5
+  },
+  {
+    id: 'hkust-environmental-management-technology',
+    jupasCode: 'JS5812',
+    name: 'BSc in Environmental Management and Technology',
+    university: 'HKUST',
+    faculty: 'Academy of Interdisciplinary Studies',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: []
+    },
+    minRequirements: { chinese: 4, english: 3, math: 3, ls: 3 },
+    medianBest5: 31.40,
+    minBest5: 30.55,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'Best 3 other subjects',
+    level: 5
+  },
+  {
+    id: 'hkust-beng-bba-dual-degree',
+    jupasCode: 'JS5901',
+    name: 'BEng/BSc & BBA Dual Degree Program in Technology and Management',
+    university: 'HKUST',
+    faculty: 'Academy of Interdisciplinary Studies',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: ['bio', 'chem', 'phy', 'combined_sci', 'integrated_sci', 'ict', 'm1', 'm2']
+    },
+    minRequirements: { chinese: 4, english: 3, math: 3, ls: 3 },
+    medianBest5: 61.66,
+    minBest5: 58.55,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'One of: Biology/Chemistry/Physics/Combined Science/Information and Communication Technology. Best 2 other subjects',
+    preferredSubjects: ['science', 'ict', 'm1', 'm2'],
+    level: 5
+  },
+
+  // Joint Programs
+  {
+    id: 'hkust-biotechnology-business',
+    jupasCode: 'JS5B11',
+    name: 'BSc in Biotechnology and Business',
+    university: 'HKUST',
+    faculty: 'Joint Programs',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: ['bio', 'chem']
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 39.75,
+    minBest5: 38.91,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'One of: Biology/Chemistry. Best of Biology/Chemistry x 1.5. Best 2 other subjects',
+    preferredSubjects: ['biology', 'chemistry'],
+    level: 5
+  },
+  {
+    id: 'hkust-mathematics-economics',
+    jupasCode: 'JS5B13',
+    name: 'BSc in Mathematics and Economics',
+    university: 'HKUST',
+    faculty: 'Joint Programs',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: ['econ', 'm1', 'm2']
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 42.60,
+    minBest5: 39.20,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'One of: Biology/Chemistry/Physics/Economics/M1/M2. Best 2 other subjects',
+    preferredSubjects: ['science', 'economics', 'm1', 'm2'],
+    level: 5
+  },
+  {
+    id: 'hkust-risk-management-business-intelligence',
+    jupasCode: 'JS5B14',
+    name: 'BSc in Risk Management and Business Intelligence',
+    university: 'HKUST',
+    faculty: 'Joint Programs',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: []
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 45.00,
+    minBest5: 42.88,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'Best 3 other subjects',
+    level: 5
+  },
+  {
+    id: 'hkust-sustainable-green-finance',
+    jupasCode: 'JS5B22',
+    name: 'BSc in Sustainable and Green Finance',
+    university: 'HKUST',
+    faculty: 'Joint Programs',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: []
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 38.63,
+    minBest5: 37.13,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'Best of 3 other subjects OR Best of Chemistry/Economics/Physics/M1/M2 x 1.5. Best 2 other subjects',
+    level: 5
+  },
+
+  // School of Business and Management
+  {
+    id: 'hkust-business-management',
+    jupasCode: 'JS5300',
+    name: 'Business & Management',
+    university: 'HKUST',
+    faculty: 'School of Business and Management',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: []
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 32.50,
+    minBest5: 32.05,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'Best 3 other subjects'
+  },
+  {
+    id: 'hkust-bba-economics',
+    jupasCode: 'JS5311',
+    name: 'BBA in Economics',
+    university: 'HKUST',
+    faculty: 'School of Business and Management',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: []
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 35.05,
+    minBest5: 34.14,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'Best 3 other subjects'
+  },
+  {
+    id: 'hkust-bba-finance',
+    jupasCode: 'JS5312',
+    name: 'BBA in Finance',
+    university: 'HKUST',
+    faculty: 'School of Business and Management',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: []
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 43.50,
+    minBest5: 42.75,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'Best of 3 other subjects OR Best of Chemistry/Economics/Physics/M1/M2 x 1.5. Best 2 other subjects'
+  },
+  {
+    id: 'hkust-bba-global-business',
+    jupasCode: 'JS5313',
+    name: 'BBA in Global Business',
+    university: 'HKUST',
+    faculty: 'School of Business and Management',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: []
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 53.44,
+    minBest5: 50.06,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'Best 3 other subjects'
+  },
+  {
+    id: 'hkust-bba-information-systems',
+    jupasCode: 'JS5314',
+    name: 'BBA in Information Systems',
+    university: 'HKUST',
+    faculty: 'School of Business and Management',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: []
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 33.40,
+    minBest5: 34.00,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'Best 3 other subjects'
+  },
+  {
+    id: 'hkust-bba-management',
+    jupasCode: 'JS5315',
+    name: 'BBA in Management',
+    university: 'HKUST',
+    faculty: 'School of Business and Management',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: []
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 33.55,
+    minBest5: 32.04,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'Best 3 other subjects'
+  },
+  {
+    id: 'hkust-bba-marketing',
+    jupasCode: 'JS5316',
+    name: 'BBA in Marketing',
+    university: 'HKUST',
+    faculty: 'School of Business and Management',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: []
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 32.50,
+    minBest5: 32.05,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'Best 3 other subjects'
+  },
+  {
+    id: 'hkust-bba-operations-management',
+    jupasCode: 'JS5317',
+    name: 'BBA in Operations Management',
+    university: 'HKUST',
+    faculty: 'School of Business and Management',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: []
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 32.48,
+    minBest5: 31.30,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'Best 3 other subjects'
+  },
+  {
+    id: 'hkust-bba-professional-accounting',
+    jupasCode: 'JS5318',
+    name: 'BBA in Professional Accounting',
+    university: 'HKUST',
+    faculty: 'School of Business and Management',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: []
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 32.40,
+    minBest5: 31.93,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'Best 3 other subjects'
+  },
+  {
+    id: 'hkust-bsc-economics-finance',
+    jupasCode: 'JS5331',
+    name: 'BSc in Economics and Finance',
+    university: 'HKUST',
+    faculty: 'School of Business and Management',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: []
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 50.06,
+    minBest5: 48.56,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'Best of 3 other subjects OR Best of Chemistry/Economics/Physics/M1/M2 x 1.5. Best 2 other subjects'
+  },
+  {
+    id: 'hkust-bsc-quantitative-finance',
+    jupasCode: 'JS5332',
+    name: 'BSc in Quantitative Finance',
+    university: 'HKUST',
+    faculty: 'School of Business and Management',
+    requiredSubjects: {
+      core: ['chi', 'eng', 'math', 'ls'],
+      electives: []
+    },
+    minRequirements: { chinese: 3, english: 3, math: 3, ls: 3 },
+    medianBest5: 60.94,
+    minBest5: 59.11,
+    maxBest5: null,
+    subjectWeighting: { 'eng': 2, 'math': 2 },
+    additionalRequirements: 'Best of 3 other subjects OR Best of Chemistry/Economics/Physics/M1/M2 x 1.5. Best 2 other subjects'
+    }
 ];
 
 export const getProgramById = (id: string): Program | undefined => {

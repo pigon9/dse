@@ -91,7 +91,7 @@ const generateRecommendation = (
   return "You're within the competitive range. Focus on maintaining grades and preparing a strong overall application.";
 };
 
-// Calculate the Best 5/6 score
+// Calculate the Best 5/6 score with priority for required and bonus subjects
 export const calculateBestScore = (
   grades: SubjectGrade[], 
   program: Program, 
@@ -101,43 +101,74 @@ export const calculateBestScore = (
   totalScore: number; 
   bestSubjects: SubjectGrade[]; 
 } => {
-  // Create a copy of grades with scores
+  // Create a copy of grades with scores and additional info
   const gradesWithScores = grades
     .filter(g => g.grade !== null)
     .map(g => {
       const subject = getSubjectById(g.subjectId);
       const baseScore = gradeToScore(g.grade);
       const weight = program.subjectWeighting?.[g.subjectId] || 1;
+      const isRequired = program.requiredSubjects.core.includes(g.subjectId) ||
+                        program.requiredSubjects.electives.includes(g.subjectId);
       
       return {
         ...g,
         baseScore,
         weightedScore: baseScore * weight,
-        category: subject?.category
+        category: subject?.category,
+        isRequired,
+        weight
       };
     });
 
-  // Sort by weighted score (highest first)
-  gradesWithScores.sort((a, b) => b.weightedScore - a.weightedScore);
-  
+  // Separate required and optional subjects
+  const requiredSubjects = gradesWithScores.filter(g => g.isRequired);
+  const optionalSubjects = gradesWithScores.filter(g => !g.isRequired);
+
+  // Sort required subjects by weighted score (highest first)
+  requiredSubjects.sort((a, b) => b.weightedScore - a.weightedScore);
+
+  // Sort optional subjects by weighted score (highest first)
+  optionalSubjects.sort((a, b) => {
+    // First compare by weighted score
+    const scoreCompare = b.weightedScore - a.weightedScore;
+    if (scoreCompare !== 0) return scoreCompare;
+    
+    // If scores are equal, prioritize subjects with higher weights
+    return b.weight - a.weight;
+  });
+
   // Determine how many subjects to use
   const subjectsToUse = useBest6 ? 6 : 5;
+
+  // Combine subjects, prioritizing required ones
+  let selectedSubjects = [...requiredSubjects];
   
-  // Take the best N subjects
-  const bestSubjects = gradesWithScores.slice(0, subjectsToUse).map(g => ({
-    subjectId: g.subjectId,
-    grade: g.grade
-  }));
-  
+  // Fill remaining slots with optional subjects
+  const remainingSlots = subjectsToUse - selectedSubjects.length;
+  if (remainingSlots > 0) {
+    selectedSubjects = [
+      ...selectedSubjects,
+      ...optionalSubjects.slice(0, remainingSlots)
+    ];
+  }
+
+  // Take only the best N subjects if we have more than needed
+  selectedSubjects = selectedSubjects.slice(0, subjectsToUse);
+
   // Calculate total score
-  let totalScore = gradesWithScores
-    .slice(0, subjectsToUse)
-    .reduce((sum, g) => sum + g.weightedScore, 0);
+  let totalScore = selectedSubjects.reduce((sum, g) => sum + g.weightedScore, 0);
     
   // Apply 10% penalty if there are missing requirements
   if (hasMissingRequirements) {
     totalScore *= 0.9;
   }
+  
+  // Convert back to SubjectGrade format
+  const bestSubjects = selectedSubjects.map(g => ({
+    subjectId: g.subjectId,
+    grade: g.grade
+  }));
   
   return { totalScore, bestSubjects };
 };

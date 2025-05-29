@@ -119,8 +119,12 @@ const ResultsPage: React.FC = () => {
                       <span className="font-medium">{roundToSigFigs(result.program.medianBest5)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Program Minimum:</span>
+                      <span>Program lower quarter:</span>
                       <span className="font-medium">{roundToSigFigs(result.program.minBest5)}</span>
+                      </div>
+                    <div className="flex justify-between">
+                      <span>Program upper quarter:</span>
+                      <span className="font-medium">{roundToSigFigs(result.program.maxBest5)}</span>
                     </div>
                     <div className="flex justify-between border-t pt-1">
                       <span>Score Gap:</span>

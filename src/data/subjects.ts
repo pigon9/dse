@@ -8,8 +8,8 @@ export const subjects: Subject[] = [
   { id: 'ls', name: 'Liberal Studies', category: 'Core' },
   
   // Mathematics Extended Modules
-  { id: 'math-m1', name: 'Mathematics Extended Module 1 (M1)', category: 'M1/M2' },
-  { id: 'math-m2', name: 'Mathematics Extended Module 2 (M2)', category: 'M1/M2' },
+  { id: 'm1', name: 'Mathematics Extended Module 1 (M1)', category: 'M1/M2' },
+  { id: 'm2', name: 'Mathematics Extended Module 2 (M2)', category: 'M1/M2' },
   
   // Category A Electives
   { id: 'bio', name: 'Biology', category: 'Elective' },

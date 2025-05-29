@@ -32,7 +32,8 @@ const calculateConfidence = (
 ): number => {
   // Calculate base confidence using sigmoid
   const sensitivity = 1.5;
-  const compareScore = isFirstPriority ? program.minBest5 : program.medianBest5;
+  // Always compare with minimum score in first priority mode
+  const compareScore = program.minBest5;
   const x = (userScore - compareScore) / sensitivity;
   let confidence = sigmoid(x) * 100;
   
@@ -241,6 +242,7 @@ export const determineLikelihood = (
   isFirstPriority: boolean
 ): LikelihoodStatus => {
   if (isFirstPriority) {
+    // In first priority mode, only compare with minimum score
     return scoreGap >= 0 ? 'Likely' : 'Unlikely';
   }
   
@@ -279,7 +281,7 @@ export const calculateAdmissionLikelihood = (
     hasMissingRequirements
   );
   
-  // Calculate score gap based on priority mode
+  // In first priority mode, always compare with minimum score
   const compareScore = isFirstPriority ? program.minBest5 : program.medianBest5;
   const scoreGap = totalScore - compareScore;
   
@@ -296,7 +298,9 @@ export const calculateAdmissionLikelihood = (
   const status = determineLikelihood(scoreGap, confidence, isFirstPriority);
   
   // Calculate admission probability
-  const probability = Math.min(100, Math.max(0, confidence + (scoreGap * 5)));
+  const probability = isFirstPriority
+    ? (scoreGap >= 0 ? 100 : 0) // In first priority mode, probability is binary
+    : Math.min(100, Math.max(0, confidence + (scoreGap * 5)));
   
   // Generate recommendation
   const recommendation = generateRecommendation(

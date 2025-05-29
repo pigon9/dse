@@ -1,42 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { usePredictor } from '../context/PredictorContext';
-import { Program } from '../types';
-import { programs, searchPrograms } from '../data/programs';
-import { Search, Building, Filter, Check, X, Plus, Star } from 'lucide-react';
+import { Program, University } from '../types';
+import { programs } from '../data/programs';
+import { Building, Filter, Check, X, Plus, Star } from 'lucide-react';
 
 const ProgramSelection: React.FC = () => {
   const { selectedPrograms, updateSelectedPrograms, calculateResults, setPriorityMode } = usePredictor();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filteredPrograms, setFilteredPrograms] = useState<Program[]>(programs);
+  const [selectedUniversity, setSelectedUniversity] = useState<University | ''>('');
+  const [selectedFaculty, setSelectedFaculty] = useState('');
   const [isFirstPriority, setIsFirstPriority] = useState(false);
-  const [activeFilters, setActiveFilters] = useState<{
-    universities: Set<string>;
-    faculties: Set<string>;
-  }>({
-    universities: new Set(),
-    faculties: new Set(),
-  });
+  const [filteredPrograms, setFilteredPrograms] = useState<Program[]>([]);
   
-  // Update filtered programs when search or filters change
+  // Get unique universities
+  const universities = [...new Set(programs.map(p => p.university))];
+  
+  // Get faculties for selected university
+  const faculties = [...new Set(
+    programs
+      .filter(p => !selectedUniversity || p.university === selectedUniversity)
+      .map(p => p.faculty)
+  )];
+  
+  // Update filtered programs when university or faculty changes
   useEffect(() => {
-    let result = searchQuery 
-      ? searchPrograms(searchQuery) 
-      : [...programs];
+    let result = [...programs];
     
-    if (activeFilters.universities.size > 0) {
-      result = result.filter(p => 
-        activeFilters.universities.has(p.university)
-      );
+    if (selectedUniversity) {
+      result = result.filter(p => p.university === selectedUniversity);
     }
     
-    if (activeFilters.faculties.size > 0) {
-      result = result.filter(p => 
-        activeFilters.faculties.has(p.faculty)
-      );
+    if (selectedFaculty) {
+      result = result.filter(p => p.faculty === selectedFaculty);
     }
     
     setFilteredPrograms(result);
-  }, [searchQuery, activeFilters]);
+  }, [selectedUniversity, selectedFaculty]);
   
   const toggleProgram = (program: Program) => {
     const isSelected = selectedPrograms.some(p => p.id === program.id);
@@ -48,45 +46,9 @@ const ProgramSelection: React.FC = () => {
     }
   };
   
-  const universities = [...new Set(programs.map(p => p.university))];
-  const faculties = [...new Set(programs.map(p => p.faculty))];
-  
-  const toggleUniversityFilter = (university: string) => {
-    const newUniversities = new Set(activeFilters.universities);
-    
-    if (newUniversities.has(university)) {
-      newUniversities.delete(university);
-    } else {
-      newUniversities.add(university);
-    }
-    
-    setActiveFilters({
-      ...activeFilters,
-      universities: newUniversities
-    });
-  };
-  
-  const toggleFacultyFilter = (faculty: string) => {
-    const newFaculties = new Set(activeFilters.faculties);
-    
-    if (newFaculties.has(faculty)) {
-      newFaculties.delete(faculty);
-    } else {
-      newFaculties.add(faculty);
-    }
-    
-    setActiveFilters({
-      ...activeFilters,
-      faculties: newFaculties
-    });
-  };
-  
   const clearFilters = () => {
-    setActiveFilters({
-      universities: new Set(),
-      faculties: new Set()
-    });
-    setSearchQuery('');
+    setSelectedUniversity('');
+    setSelectedFaculty('');
   };
   
   const handleViewResults = () => {
@@ -106,9 +68,9 @@ const ProgramSelection: React.FC = () => {
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-gray-800 flex items-center">
               <Filter className="h-4 w-4 mr-2" />
-              Filters
+              Select Institution
             </h3>
-            {(activeFilters.universities.size > 0 || activeFilters.faculties.size > 0) && (
+            {(selectedUniversity || selectedFaculty) && (
               <button 
                 onClick={clearFilters}
                 className="text-xs text-blue-600 hover:text-blue-800"
@@ -142,47 +104,47 @@ const ProgramSelection: React.FC = () => {
             </p>
           </div>
 
-          {/* University Filter */}
-          <div className="mb-4">
+          {/* University Selection */}
+          <div className="mb-6">
             <h4 className="text-sm font-medium text-gray-700 mb-2">University</h4>
-            <div className="space-y-1">
+            <div className="space-y-2">
               {universities.map(university => (
-                <div key={university} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`uni-${university}`}
-                    checked={activeFilters.universities.has(university)}
-                    onChange={() => toggleUniversityFilter(university)}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                  />
-                  <label htmlFor={`uni-${university}`} className="ml-2 text-sm text-gray-700">
-                    {university}
-                  </label>
-                </div>
+                <button
+                  key={university}
+                  onClick={() => setSelectedUniversity(university)}
+                  className={`w-full text-left px-3 py-2 rounded-md transition-colors ${
+                    selectedUniversity === university
+                      ? 'bg-blue-100 border border-blue-200 text-blue-700'
+                      : 'hover:bg-gray-100'
+                  }`}
+                >
+                  {university}
+                </button>
               ))}
             </div>
           </div>
           
-          {/* Faculty Filter */}
-          <div>
-            <h4 className="text-sm font-medium text-gray-700 mb-2">Faculty</h4>
-            <div className="space-y-1 max-h-64 overflow-y-auto pr-2">
-              {faculties.map(faculty => (
-                <div key={faculty} className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={`fac-${faculty}`}
-                    checked={activeFilters.faculties.has(faculty)}
-                    onChange={() => toggleFacultyFilter(faculty)}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                  />
-                  <label htmlFor={`fac-${faculty}`} className="ml-2 text-sm text-gray-700">
+          {/* Faculty Selection */}
+          {selectedUniversity && (
+            <div>
+              <h4 className="text-sm font-medium text-gray-700 mb-2">Faculty</h4>
+              <div className="space-y-2 max-h-64 overflow-y-auto">
+                {faculties.map(faculty => (
+                  <button
+                    key={faculty}
+                    onClick={() => setSelectedFaculty(faculty)}
+                    className={`w-full text-left px-3 py-2 rounded-md transition-colors ${
+                      selectedFaculty === faculty
+                        ? 'bg-blue-100 border border-blue-200 text-blue-700'
+                        : 'hover:bg-gray-100'
+                    }`}
+                  >
                     {faculty}
-                  </label>
-                </div>
-              ))}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
       
@@ -192,25 +154,13 @@ const ProgramSelection: React.FC = () => {
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-2 flex items-center">
               <Building className="mr-2 h-6 w-6 text-blue-600" />
-              Select University Programs
+              Available Programs
             </h2>
             <p className="text-gray-600 mb-4">
-              Choose programs you're interested in applying to. You can select multiple programs.
+              {selectedUniversity 
+                ? `Showing programs for ${selectedUniversity}${selectedFaculty ? ` - ${selectedFaculty}` : ''}`
+                : 'Please select a university to view available programs'}
             </p>
-            
-            {/* Search Bar */}
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <Search className="h-5 w-5 text-gray-400" />
-              </div>
-              <input
-                type="text"
-                placeholder="Search by program name, JUPAS code, university..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 w-full p-2.5 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
             
             {/* Selected Counter */}
             <div className="mt-4 flex justify-between items-center">
@@ -218,7 +168,7 @@ const ProgramSelection: React.FC = () => {
                 {selectedPrograms.length} program{selectedPrograms.length !== 1 ? 's' : ''} selected
               </span>
               <span className="text-sm text-gray-600">
-                {filteredPrograms.length} result{filteredPrograms.length !== 1 ? 's' : ''}
+                {filteredPrograms.length} program{filteredPrograms.length !== 1 ? 's' : ''} available
               </span>
             </div>
           </div>
@@ -280,16 +230,22 @@ const ProgramSelection: React.FC = () => {
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
                   <X className="h-8 w-8 text-gray-400" />
                 </div>
-                <h3 className="text-lg font-medium text-gray-900">No programs found</h3>
+                <h3 className="text-lg font-medium text-gray-900">
+                  {selectedUniversity ? 'No programs found' : 'Select a university'}
+                </h3>
                 <p className="text-gray-600 mt-1">
-                  Try adjusting your filters or search query
+                  {selectedUniversity 
+                    ? 'Try selecting a different faculty or university'
+                    : 'Choose a university to view available programs'}
                 </p>
-                <button
-                  onClick={clearFilters}
-                  className="mt-4 text-sm text-blue-600 hover:text-blue-800"
-                >
-                  Clear all filters
-                </button>
+                {selectedUniversity && (
+                  <button
+                    onClick={clearFilters}
+                    className="mt-4 text-sm text-blue-600 hover:text-blue-800"
+                  >
+                    Clear selection
+                  </button>
+                )}
               </div>
             )}
           </div>

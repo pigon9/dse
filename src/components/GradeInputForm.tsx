@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { usePredictor } from '../context/PredictorContext';
 import { SubjectGrade, GradeValue, SelfAssessment } from '../types';
 import { subjects, getCoreSubjects } from '../data/subjects';
-import { BookOpen, Plus, Trash2, Info, Scale, AlertTriangle } from 'lucide-react';
+import { BookOpen, Plus, Trash2, Info, Scale, AlertTriangle, CheckCircle } from 'lucide-react';
 
 const GradeInputForm: React.FC = () => {
   const { updateUserGrades } = usePredictor();
@@ -11,6 +11,7 @@ const GradeInputForm: React.FC = () => {
   const [error, setError] = useState('');
   const [isEnabled, setIsEnabled] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [autoSaveMessage, setAutoSaveMessage] = useState('');
   
   // Initialize with core subjects
   useEffect(() => {
@@ -20,6 +21,27 @@ const GradeInputForm: React.FC = () => {
     }));
     setGradesInput(initialGrades);
   }, []);
+  
+  // Auto-save effect
+  useEffect(() => {
+    if (!hasUnsavedChanges) return;
+
+    const coreSubjectIds = getCoreSubjects().map(s => s.id);
+    const missingCores = gradesInput
+      .filter(g => coreSubjectIds.includes(g.subjectId) && g.grade === null)
+      .length;
+    
+    if (missingCores === 0) {
+      updateUserGrades({
+        grades: gradesInput,
+        selfAssessment
+      });
+      setIsEnabled(true);
+      setHasUnsavedChanges(false);
+      setAutoSaveMessage('Changes saved automatically');
+      setTimeout(() => setAutoSaveMessage(''), 3000);
+    }
+  }, [gradesInput, selfAssessment, hasUnsavedChanges, updateUserGrades]);
   
   // Handle grade change
   const handleGradeChange = (index: number, grade: GradeValue | null) => {
@@ -69,7 +91,7 @@ const GradeInputForm: React.FC = () => {
     setHasUnsavedChanges(true);
   };
   
-  // Save grades
+  // Save grades manually
   const handleToggle = () => {
     const coreSubjectIds = getCoreSubjects().map(s => s.id);
     const missingCores = gradesInput
@@ -123,7 +145,14 @@ const GradeInputForm: React.FC = () => {
       {hasUnsavedChanges && (
         <div className="bg-amber-50 text-amber-700 p-3 rounded-md mb-4 flex items-center">
           <AlertTriangle className="h-5 w-5 mr-2" />
-          You have unsaved changes. Please click "Save & Continue" before proceeding.
+          Changes will be saved automatically when all core subjects have grades
+        </div>
+      )}
+
+      {autoSaveMessage && (
+        <div className="bg-green-50 text-green-700 p-3 rounded-md mb-4 flex items-center">
+          <CheckCircle className="h-5 w-5 mr-2" />
+          {autoSaveMessage}
         </div>
       )}
       

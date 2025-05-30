@@ -5,7 +5,7 @@ export const subjects: Subject[] = [
   { id: 'chi', name: 'Chinese Language', category: 'Core' },
   { id: 'eng', name: 'English Language', category: 'Core' },
   { id: 'math', name: 'Mathematics (Compulsory)', category: 'Core' },
-  { id: 'ls', name: 'Liberal Studies or CS (A=#)', category: 'Core' },
+  { id: 'ls', name: 'Liberal Studies or CS (A=3)', category: 'Core' },
   
   // Mathematics Extended Modules
   { id: 'm1', name: 'Mathematics Extended Module 1 (M1)', category: 'M1/M2' },

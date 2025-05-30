@@ -175,7 +175,7 @@ const ResultsPage: React.FC = () => {
           Important Notes:
         </h3>
         <ul className="list-disc list-inside text-xs text-blue-700 space-y-1">
-          <li>These predictions are based on historical data and should be used as a guide only.</li>
+          <li>These predictions are based on 2025 Expected Score for JUPAS Applicants and should be used as a guide only.</li>
           <li>Admission criteria may change year to year, and special considerations may apply.</li>
           <li>Meeting minimum requirements doesn't guarantee admission.</li>
           <li>Consider other factors like interviews, portfolios, and extracurricular activities.</li>

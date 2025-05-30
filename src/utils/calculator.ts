@@ -137,6 +137,17 @@ export const calculateBestScore = (
       };
     });
 
+  // Handle M1/M2 subjects - only keep the one with higher score
+  const m1Grade = gradesWithScores.find(g => g.subjectId === 'm1');
+  const m2Grade = gradesWithScores.find(g => g.subjectId === 'm2');
+  
+  if (m1Grade && m2Grade) {
+    const betterGrade = m1Grade.weightedScore > m2Grade.weightedScore ? m1Grade : m2Grade;
+    gradesWithScores.splice(gradesWithScores.indexOf(m1Grade), 1);
+    gradesWithScores.splice(gradesWithScores.indexOf(m2Grade), 1);
+    gradesWithScores.push(betterGrade);
+  }
+
   // Separate required and optional subjects
   const requiredSubjects = gradesWithScores.filter(g => g.isRequired);
   const optionalSubjects = gradesWithScores.filter(g => !g.isRequired);

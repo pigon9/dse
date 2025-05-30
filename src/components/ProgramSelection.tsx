@@ -109,7 +109,7 @@ const ProgramSelection: React.FC = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <Star className="h-4 w-4 text-amber-500 mr-2" />
-                <span className="text-sm font-medium text-amber-700">First Priority Mode</span>
+                <span className="text-sm font-medium text-amber-700">Band A programs</span>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input

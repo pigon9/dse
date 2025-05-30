@@ -58,6 +58,15 @@ const calculateConfidence = (
   return Math.round(confidence);
 };
 
+// Calculate Band A probability based on score gap
+const calculateBandAProbability = (scoreGap: number): number => {
+  if (scoreGap >= 2) return 100; // Significantly above minimum
+  if (scoreGap >= 1) return 75;  // Comfortably above minimum
+  if (scoreGap >= 0) return 50;  // Just meeting minimum
+  if (scoreGap >= -1) return 25; // Slightly below minimum
+  return 0;                      // Well below minimum
+};
+
 // Generate recommendation based on prediction
 const generateRecommendation = (
   scoreGap: number,
@@ -70,8 +79,14 @@ const generateRecommendation = (
   }
   
   if (isFirstPriority) {
-    if (scoreGap >= 0) {
-      return "You meet the minimum requirements for Band A consideration. Focus on maintaining your performance.";
+    if (scoreGap >= 2) {
+      return "You're well above the minimum requirements for Band A consideration. Strong position for admission.";
+    } else if (scoreGap >= 1) {
+      return "You're comfortably above the minimum requirements for Band A. Focus on maintaining performance.";
+    } else if (scoreGap >= 0) {
+      return "You meet the minimum requirements for Band A consideration. Consider strengthening your position.";
+    } else if (scoreGap >= -1) {
+      return "You're close to meeting Band A requirements. Small improvements could make a difference.";
     } else {
       return "Consider improving your grades to meet the minimum requirements for Band A consideration.";
     }
@@ -242,8 +257,9 @@ export const determineLikelihood = (
   isFirstPriority: boolean
 ): LikelihoodStatus => {
   if (isFirstPriority) {
-    // In first priority mode, only compare with minimum score
-    return scoreGap >= 0 ? 'Likely' : 'Unlikely';
+    if (scoreGap >= 1) return 'Likely';
+    if (scoreGap >= 0) return 'Borderline';
+    return 'Unlikely';
   }
   
   if (confidence >= 75) return 'Likely';
@@ -299,7 +315,7 @@ export const calculateAdmissionLikelihood = (
   
   // Calculate admission probability
   const probability = isFirstPriority
-    ? (scoreGap >= 0 ? 100 : 0) // In first priority mode, probability is binary
+    ? calculateBandAProbability(scoreGap) // Use 25% increments for Band A
     : Math.min(100, Math.max(0, confidence + (scoreGap * 5)));
   
   // Generate recommendation

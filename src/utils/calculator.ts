@@ -33,7 +33,7 @@ const calculateConfidence = (
   // Calculate base confidence using sigmoid
   const sensitivity = 1.5;
   // Always compare with minimum score in first priority mode
-  const compareScore = isFirstPriority ? program.minBest5 : program.medianBest5;
+  const compareScore = program.minBest5;
   const x = (userScore - compareScore) / sensitivity;
   let confidence = sigmoid(x) * 100;
   

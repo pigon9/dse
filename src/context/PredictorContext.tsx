@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 import { SubjectGrade, Program, UserGrades, PredictionResult } from '../types';
-import { calculateAdmissionLikelihood } from '../utils/calculator';
+import { calculateAdmissionLikelihood as calculateStandard } from '../utils/calculator';
+import { calculateAdmissionLikelihood as calculateBandA } from '../utils/BandA';
 
 interface PredictorContextType {
   userGrades: UserGrades;
@@ -51,8 +52,9 @@ export const PredictorProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const calculateResults = () => {
+    const calculator = isFirstPriority ? calculateBandA : calculateStandard;
     const results = selectedPrograms.map(program => 
-      calculateAdmissionLikelihood(userGrades, program, isFirstPriority)
+      calculator(userGrades, program, isFirstPriority)
     );
     setPredictionResults(results);
   };

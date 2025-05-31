@@ -1,4 +1,4 @@
-import { UserGrades, Program, PredictionResult, SubjectGrade, LikelihoodStatus, GradeValue, SelfAssessment } from '../types';
+import { UserGrades, Program, PredictionResult, SubjectGrade, LikelihoodStatus, GradeValue, SelfAssessment, isFirstPriorit} from '../types';
 import { getSubjectById } from '../data/subjects';
 
 // Convert grade string to numeric value
